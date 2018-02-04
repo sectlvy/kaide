@@ -48,17 +48,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">归属公司:</label>
+			<label class="control-label">归属门店:</label>
 			<div class="controls">
                 <sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
-					title="公司" url="/sys/office/treeData?type=1" cssClass="required"/>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">归属部门:</label>
-			<div class="controls">
-                <sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
-					title="部门" url="/sys/office/treeData?type=2" cssClass="required" notAllowSelectParent="true"/>
+					title="门店" url="/sys/office/treeData?type=1" cssClass="required"/> <font color="red">*</font>
 			</div>
 		</div>
 		<div class="control-group">
@@ -105,12 +98,6 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">电话:</label>
-			<div class="controls">
-				<form:input path="phone" htmlEscape="false" maxlength="100"/>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">手机:</label>
 			<div class="controls">
 				<form:input path="mobile" htmlEscape="false" maxlength="100"/>
@@ -123,15 +110,6 @@
 					<form:options items="${fns:getDictList('yes_no')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
 				</form:select>
 				<span class="help-inline"><font color="red">*</font> “是”代表此账号允许登录，“否”则表示此账号不允许登录</span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">用户类型:</label>
-			<div class="controls">
-				<form:select path="userType" class="input-xlarge">
-					<form:option value="" label="请选择"/>
-					<form:options items="${fns:getDictList('sys_user_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
 			</div>
 		</div>
 		<div class="control-group">

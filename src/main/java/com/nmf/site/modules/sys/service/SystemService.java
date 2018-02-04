@@ -94,7 +94,12 @@ public class SystemService extends BaseService implements InitializingBean {
 		// 设置分页参数
 		user.setPage(page);
 		// 执行分页查询
-		page.setList(userDao.findList(user));
+		List<User> slist = userDao.findList(user);
+		for(User userd:slist) {
+			userd.setRoleList(roleDao.findList(new Role(userd)));
+		}
+		page.setList(slist);
+		
 		return page;
 	}
 	
@@ -402,7 +407,7 @@ public class SystemService extends BaseService implements InitializingBean {
 	public static boolean printKeyLoadMessage(){
 		StringBuilder sb = new StringBuilder();
 		sb.append("\r\n======================================================================\r\n");
-		sb.append("\r\n    欢迎使用 "+Global.getConfig("productName")+"  - Powered By http://jeesite.com\r\n");
+		sb.append("\r\n    欢迎使用 "+Global.getConfig("productName")+"\r\n");
 		sb.append("\r\n======================================================================\r\n");
 		System.out.println(sb.toString());
 		return true;

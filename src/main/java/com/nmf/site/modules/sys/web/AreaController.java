@@ -59,9 +59,13 @@ public class AreaController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(Area area, Model model) {
 		if (area.getParent()==null||area.getParent().getId()==null){
-			area.setParent(UserUtils.getUser().getOffice().getArea());
+			if(UserUtils.getUser().getOffice()!=null) {
+				area.setParent(UserUtils.getUser().getOffice().getArea());
+			}
 		}
-		area.setParent(areaService.get(area.getParent().getId()));
+		if(area.getParent()!=null && area.getParent().getId()!=null) {
+			area.setParent(areaService.get(area.getParent().getId()));
+		}
 //		// 自动获取排序号
 //		if (StringUtils.isBlank(area.getId())){
 //			int size = 0;
