@@ -9,6 +9,7 @@
 		a.password AS "password",
 		a.amount AS "amount",
 		a.biz_store_id AS "bizStoreId",
+		a.biz_store_name AS "bizStoreName",
 		a.birthday AS "birthday",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
@@ -19,6 +20,7 @@
 	</sql>
 	
 	<sql id="bizMemberJoins">
+		LEFT JOIN sys_office o6 ON o6.id = a.biz_store_id
 	</sql>
     
 	<select id="get" resultType="BizMember">
@@ -45,8 +47,8 @@
 			<if test="accountNo != null and accountNo != ''">
 				AND a.account_no = #{accountNo}
 			</if>
-			<if test="beginCreateDate != null and endCreateDate != null and beginCreateDate != '' and endCreateDate != ''">
-				AND a.create_date BETWEEN #{beginCreateDate} AND #{endCreateDate}
+			<if test="bizStoreId != null and bizStoreId != ''">
+				AND a.biz_store_id = #{bizStoreId}
 			</if>
 		</where>
 		<choose>
@@ -82,9 +84,8 @@
 			id,
 			nick_name,
 			account_no,
-			password,
-			amount,
 			biz_store_id,
+			biz_store_name,
 			birthday,
 			create_by,
 			create_date,
@@ -96,9 +97,8 @@
 			#{id},
 			#{nickName},
 			#{accountNo},
-			#{password},
-			#{amount},
 			#{bizStoreId},
+			#{bizStoreName},
 			#{birthday},
 			#{createBy.id},
 			#{createDate},
@@ -116,6 +116,7 @@
 			password = #{password},
 			amount = #{amount},
 			biz_store_id = #{bizStoreId},
+			biz_store_name = #{bizStoreName},
 			birthday = #{birthday},
 			update_by = #{updateBy.id},
 			update_date = #{updateDate},

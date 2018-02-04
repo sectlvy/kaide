@@ -8,9 +8,16 @@
 		$(document).ready(function() {
 			//$("#name").focus();
 			$("#inputForm").validate({
+				rules: {
+					accountNo: {remote: "${ctx}/biz/member/bizMember/checkLoginName?accountNo=" + encodeURIComponent('${bizMember.accountNo}')}
+				},
 				submitHandler: function(form){
 					loading('正在提交，请稍等...');
 					form.submit();
+				},
+				messages: {
+					accountNo: {remote: "会员登录账户 ${bizMember.accountNo} 已存在"},
+					confirmNewPassword: {equalTo: "输入与上面相同的密码"}
 				},
 				errorContainer: "#messageBox",
 				errorPlacement: function(error, element) {
@@ -36,34 +43,38 @@
 		<div class="control-group">
 			<label class="control-label">昵称：</label>
 			<div class="controls">
-				<form:input path="nickName" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="nickName" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">账户：</label>
 			<div class="controls">
-				<form:input path="accountNo" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:input path="accountNo" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">密码：</label>
 			<div class="controls">
-				<form:input path="password" htmlEscape="false" maxlength="255" class="input-xlarge "/>
+				<form:password path="password" id="newPassword" htmlEscape="false" maxlength="255" class="input-xlarge required"/>
+				<c:if test="${not empty bizMember.id}"><span class="help-inline">若不修改密码，请留空。</span></c:if>
+				<c:if test="${empty bizMember.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">余额 单位分：</label>
+			<label class="control-label">确认密码:</label>
 			<div class="controls">
-				<form:input path="amount" htmlEscape="false" maxlength="11" class="input-xlarge "/>
+				<input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="3" equalTo="#newPassword"/>
+				<c:if test="${empty user.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">门店：</label>
 			<div class="controls">
-				<form:select path="bizStoreId" class="input-xlarge ">
-					<form:option value="" label=""/>
-					<form:options items="${fns:getDictList('')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>
+				<sys:treeselect id="bizStoreId" name="bizStoreId" value="${bizMember.bizStoreId}" labelName="" labelValue="${bizMember.bizStoreName}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="required" allowClear="true" notAllowSelectParent="true"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">

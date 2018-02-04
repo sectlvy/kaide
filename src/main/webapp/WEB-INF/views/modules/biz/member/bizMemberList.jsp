@@ -31,13 +31,9 @@
 			<li><label>账户：</label>
 				<form:input path="accountNo" htmlEscape="false" maxlength="255" class="input-medium"/>
 			</li>
-			<li><label>创建时间：</label>
-				<input name="beginCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${bizMember.beginCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/> - 
-				<input name="endCreateDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
-					value="<fmt:formatDate value="${bizMember.endCreateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+			<li><label>门店：</label>
+				<sys:treeselect id="bizStoreId" name="bizStoreId" value="${bizMember.bizStoreId}" labelName="" labelValue="${bizMember.bizStoreName}"
+					title="部门" url="/sys/office/treeData?type=2" cssClass="input-small" allowClear="true" notAllowSelectParent="true"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
 			<li class="clearfix"></li>
@@ -50,8 +46,10 @@
 				<th>编号</th>
 				<th>昵称</th>
 				<th>账户</th>
-				<th>余额 单位分</th>
-				<th>更新时间</th>
+				<th>余额（元）</th>
+				<th>注册门店</th>
+				<th>生日</th>
+				<th>注册时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="biz:member:bizMember:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -69,10 +67,16 @@
 					${bizMember.accountNo}
 				</td>
 				<td>
-					${bizMember.amount}
+					${bizMember.amount}（元）
 				</td>
 				<td>
-					<fmt:formatDate value="${bizMember.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${bizMember.bizStoreName}
+				</td>
+				<td>
+					<fmt:formatDate value="${bizMember.birthday}" pattern="yyyy-MM-dd HH:mm:ss"/>
+				</td>
+				<td>
+					<fmt:formatDate value="${bizMember.createDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${bizMember.remarks}

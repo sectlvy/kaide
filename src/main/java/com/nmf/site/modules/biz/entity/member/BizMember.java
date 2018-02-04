@@ -1,19 +1,18 @@
 /**
- * Copyright &copy; 2012-2016 com.nmf All rights reserved.
+ * Copyright &copy; com.nmf All rights reserved.
  */
 package com.nmf.site.modules.biz.entity.member;
 
 import org.hibernate.validator.constraints.Length;
-
 import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import com.nmf.site.common.persistence.DataEntity;
 
 /**
  * 会员Entity
  * @author 北冥
- * @version 2018-01-31
+ * @version 2018-02-04
  */
 public class BizMember extends DataEntity<BizMember> {
 	
@@ -23,9 +22,8 @@ public class BizMember extends DataEntity<BizMember> {
 	private String password;		// 密码
 	private String amount;		// 余额 单位分
 	private String bizStoreId;		// 门店
+	private String bizStoreName;		// 门店名称
 	private Date birthday;		// 生日
-	private Date beginCreateDate;		// 开始 创建时间
-	private Date endCreateDate;		// 结束 创建时间
 	
 	public BizMember() {
 		super();
@@ -35,7 +33,7 @@ public class BizMember extends DataEntity<BizMember> {
 		super(id);
 	}
 
-	@Length(min=0, max=255, message="昵称长度必须介于 0 和 255 之间")
+	@Length(min=1, max=255, message="昵称长度必须介于 1 和 255 之间")
 	public String getNickName() {
 		return nickName;
 	}
@@ -44,7 +42,7 @@ public class BizMember extends DataEntity<BizMember> {
 		this.nickName = nickName;
 	}
 	
-	@Length(min=0, max=255, message="账户长度必须介于 0 和 255 之间")
+	@Length(min=1, max=255, message="账户长度必须介于 1 和 255 之间")
 	public String getAccountNo() {
 		return accountNo;
 	}
@@ -53,7 +51,7 @@ public class BizMember extends DataEntity<BizMember> {
 		this.accountNo = accountNo;
 	}
 	
-	@Length(min=0, max=255, message="密码长度必须介于 0 和 255 之间")
+	@Length(min=1, max=255, message="密码长度必须介于 1 和 255 之间")
 	public String getPassword() {
 		return password;
 	}
@@ -71,13 +69,22 @@ public class BizMember extends DataEntity<BizMember> {
 		this.amount = amount;
 	}
 	
-	@Length(min=0, max=255, message="门店长度必须介于 0 和 255 之间")
+	@Length(min=1, max=255, message="门店长度必须介于 1 和 255 之间")
 	public String getBizStoreId() {
 		return bizStoreId;
 	}
 
 	public void setBizStoreId(String bizStoreId) {
 		this.bizStoreId = bizStoreId;
+	}
+	
+	@Length(min=0, max=255, message="门店名称长度必须介于 0 和 255 之间")
+	public String getBizStoreName() {
+		return bizStoreName;
+	}
+
+	public void setBizStoreName(String bizStoreName) {
+		this.bizStoreName = bizStoreName;
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -89,20 +96,4 @@ public class BizMember extends DataEntity<BizMember> {
 		this.birthday = birthday;
 	}
 	
-	public Date getBeginCreateDate() {
-		return beginCreateDate;
-	}
-
-	public void setBeginCreateDate(Date beginCreateDate) {
-		this.beginCreateDate = beginCreateDate;
-	}
-	
-	public Date getEndCreateDate() {
-		return endCreateDate;
-	}
-
-	public void setEndCreateDate(Date endCreateDate) {
-		this.endCreateDate = endCreateDate;
-	}
-		
 }

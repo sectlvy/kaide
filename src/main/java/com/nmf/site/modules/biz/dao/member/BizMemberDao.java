@@ -10,7 +10,7 @@ import com.nmf.site.modules.biz.entity.member.BizMember;
 /**
  * 会员DAO接口
  * @author 北冥
- * @version 2018-01-31
+ * @version 2018-02-04
  */
 @MyBatisDao
 public interface BizMemberDao extends CrudDao<BizMember> {

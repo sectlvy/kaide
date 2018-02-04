@@ -4,6 +4,7 @@
 package com.nmf.site.modules.sys.interceptor;
 
 import java.text.SimpleDateFormat;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.nmf.site.common.service.BaseService;
 import com.nmf.site.common.utils.DateUtils;
 import com.nmf.site.modules.sys.utils.LogUtils;
+import com.nmf.site.modules.sys.utils.UserUtils;
 
 /**
  * 日志拦截器
@@ -53,6 +55,16 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		// 保存日志
 		LogUtils.saveLog(request, handler, ex, null);
 		
+		StringBuffer sbstr = new StringBuffer();
+		Set<String> keyset = request.getParameterMap().keySet();
+		for (String key : keyset) {
+			String[] values = request.getParameterValues(key);
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
+				sbstr.append(key + "=" + value + "&");
+			}
+		}
+		logger.info("用户【" + UserUtils.getUser().getId()+" "+UserUtils.getUser().getName() + "】" + request.getRequestURL().toString() + "?" + sbstr.toString() + "\t");
 		// 打印JVM信息。
 		if (logger.isDebugEnabled()){
 			long beginTime = startTimeThreadLocal.get();//得到线程绑定的局部变量（开始时间）  

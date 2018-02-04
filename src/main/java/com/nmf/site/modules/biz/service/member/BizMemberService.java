@@ -1,5 +1,5 @@
 /**
- * Copyright &copy; 2012-2016 com.nmf All rights reserved.
+ * Copyright &copy; com.nmf
  */
 package com.nmf.site.modules.biz.service.member;
 
@@ -11,23 +11,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.nmf.site.common.persistence.Page;
 import com.nmf.site.common.service.CrudService;
-import com.nmf.site.common.utils.StringUtils;
 import com.nmf.site.modules.biz.dao.member.BizMemberDao;
 import com.nmf.site.modules.biz.entity.member.BizMember;
+import com.nmf.site.modules.sys.dao.OfficeDao;
+import com.nmf.site.modules.sys.entity.Office;
 
 /**
  * 会员Service
  * @author 北冥
- * @version 2018-01-31
+ * @version 2018-02-04
  */
 @Service
 @Transactional(readOnly = true)
 public class BizMemberService extends CrudService<BizMemberDao, BizMember> {
-
-	
+	@Autowired
+	OfficeDao officeDao;
 	public BizMember get(String id) {
-		BizMember bizMember = super.get(id);
-		return bizMember;
+		return super.get(id);
 	}
 	
 	public List<BizMember> findList(BizMember bizMember) {
@@ -40,12 +40,26 @@ public class BizMemberService extends CrudService<BizMemberDao, BizMember> {
 	
 	@Transactional(readOnly = false)
 	public void save(BizMember bizMember) {
+		String storeId = bizMember.getBizStoreId();
+		Office office = officeDao.get(storeId);
+		bizMember.setBizStoreName(office.getName());
 		super.save(bizMember);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(BizMember bizMember) {
 		super.delete(bizMember);
+	}
+	
+	public BizMember getByLoginName(String accountNo) {
+		BizMember bizMember = new BizMember();
+		bizMember.setAccountNo(accountNo);
+		List<BizMember> blist = findList(bizMember);
+		
+		if(blist.size()>0) {
+			return blist.get(0);
+		}
+		return null;
 	}
 	
 }
